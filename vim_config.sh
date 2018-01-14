@@ -124,5 +124,16 @@ set shortmess=a
 " Used for running current python script
 nn ,py :r! python %
 
+" C, C++ header file add macro automatically
+function! s:insert_gates()
+  let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
+  execute "normal! i#ifndef __" . gatename . "__"
+  execute "normal! o#define __" . gatename . "__"
+  execute "normal! Go#endif /* __" . gatename . "__ */"
+  execute "normal! 2Go"
+  write
+endfunction
+autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
+
 " ========================= Programming END ===========================
 EOF
