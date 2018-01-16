@@ -78,19 +78,20 @@ noremap / /\v
 let mapleader = ","
 " Using ,ne to show NERDTree Plugin
 map <leader>ne :NERDTree<CR>
+" ,r to switch to directory tree
+map <leader>r  :NERDTreeFind<CR>
+
+" ======================= NERDTree Plugin End =========================
+
+" ====================== Coding Highlight Plugin =======================
 
 " Used for C++ syntax highlight
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
-" ======================= NERDTree Plugin End =========================
-
-" ====================== Coding Highlight Plugin =======================
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 let g:cpp_concepts_highlight = 1
+
 " ======================================================================
 
 " =========================== Programming =============================
