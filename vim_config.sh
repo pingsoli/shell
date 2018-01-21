@@ -81,6 +81,8 @@ map <leader>ne :NERDTree<CR>
 " ,r to switch to directory tree
 map <leader>r  :NERDTreeFind<CR>
 
+let NERDTreeIgnore = ['\.o$', '\.swp$', '\.png']
+
 " ======================= NERDTree Plugin End =========================
 
 " ====================== Coding Highlight Plugin =======================
