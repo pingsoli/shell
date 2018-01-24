@@ -58,41 +58,44 @@ set listchars=tab:>~,trail:.,nbsp:~
 set list
 " ======================== Generic Setting  End =======================
 
+
 " ======================= Searching Settting ==========================
 set showmatch           " Show all matching (searching)
-set ignorecase          " Ignore case when searching or mathcing
-set incsearch           " Increse search when searching
-set hlsearch            " Hightlight the searching or matching
-" F5 will find the next occurrence after vimgrep
-map <F5> :cp!<CR>
-" F6 will find the previous occurrence after vimgrep
-map <F6> :cn!<CR>
-" F8 search for word under the cursor recursively
-" :copen , to close -> :ccl
-nnoremap <F8> :grep! "\<<cword>\>" . -r<CR>:copen 33<CR>
-" use perl regexes
-noremap / /\v
+"set ignorecase          " Ignore case when searching or mathcing
+"set incsearch           " Increse search when searching
+"set hlsearch            " Hightlight the searching or matching
 " ===================== Searching Settting End ========================
+
 
 " ========================= NERDTree Plugin ===========================
 let mapleader = ","
 " Using ,ne to show NERDTree Plugin
-map <leader>ne :NERDTree<CR>
+nn <leader>ne :NERDTree<CR>
 " ,r to switch to directory tree
-map <leader>r  :NERDTreeFind<CR>
+nn <leader>r  :NERDTreeFind<CR>
 
 let NERDTreeIgnore = ['\.o$', '\.swp$', '\.png']
 
 " ======================= NERDTree Plugin End =========================
 
+
+" ========================== tagbar plugin ============================
+
+let g:tagbar_ctags_bin = "/usr/local/ctags/bin/ctags"
+nmap <F8> :TagbarToggle<CR>
+nn ,t :TagbarOpen j<CR>
+
+" ======================== tagbar plugin end ==========================
+
+
 " ====================== Coding Highlight Plugin =======================
 
 " Used for C++ syntax highlight
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
-let g:cpp_experimental_template_highlight = 1
-let g:cpp_concepts_highlight = 1
+"let g:cpp_class_scope_highlight = 1
+"let g:cpp_member_variable_highlight = 1
+"let g:cpp_class_decl_highlight = 1
+"let g:cpp_experimental_simple_template_highlight = 1
+"let g:cpp_concepts_highlight = 1
 
 " ======================================================================
 
@@ -140,3 +143,4 @@ autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 
 " ========================= Programming END ===========================
 EOF
+" 20 ~ ... lines
