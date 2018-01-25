@@ -23,7 +23,7 @@ set nu                  " Show line number
 set ruler               " Show current cursor's positin (rows, cols)
 set background=dark     " Background color, default dark
 set encoding=utf-8      " Encoding, default utf-8
-set wrap                " Auto Wrapup
+set nowrap              " Nowrap to navigate code
 set mouse=c             " Command line (mouse=a allows mouse operation)
 set smartcase
 set autoindent          " Auto-indent
@@ -133,9 +133,9 @@ nn ,py :r! python %
 " C, C++ header file add macro automatically
 function! s:insert_gates()
   let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
-  execute "normal! i#ifndef __" . gatename . "__"
-  execute "normal! o#define __" . gatename . "__"
-  execute "normal! Go#endif /* __" . gatename . "__ */"
+  execute "normal! i#ifndef _" . gatename . "_"
+  execute "normal! o#define _" . gatename . "_"
+  execute "normal! Go#endif /* _" . gatename . "_ */"
   execute "normal! 2Go"
   write
 endfunction
