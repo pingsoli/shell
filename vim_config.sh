@@ -18,8 +18,8 @@ vim_config_file="/etc/vim/vimrc.local"
 
 cat >$vim_config_file << 'EOF'
 filetype plugin indent on
-" ========================== Generic Setting ==========================
-set nu                  " Show line number
+" ========================== general setting ==========================
+set nu rnu              " Absolute + Relative number simutaneously
 set ruler               " Show current cursor's positin (rows, cols)
 set background=dark     " Background color, default dark
 set encoding=utf-8      " Encoding, default utf-8
@@ -30,8 +30,8 @@ set autoindent          " Auto-indent
 set expandtab           " Expand tab with whitesapce
 set tabstop=2           " Use 2 whitespace to expand tab
 set softtabstop=2       " Use 2 whitespace to expand tab
+set t_Co=256            " Force vim into 256 color mode
 set shiftwidth=2        " Use 2 whitespace to expand tab
-"set backspace=eol,start,indent  " Set backspace to delete a character
 
 " Allowing cursor moving in insert mode
 ino <C-H> <Left>
@@ -56,7 +56,7 @@ nn ,m :marks<ENTER>
 " Show all whitespace and tabs
 set listchars=tab:>~,trail:.,nbsp:~
 set list
-" ======================== Generic Setting  End =======================
+" ======================== general setting  end =======================
 
 
 " ======================= Searching Settting ==========================
@@ -67,7 +67,7 @@ set showmatch           " Show all matching (searching)
 " ===================== Searching Settting End ========================
 
 
-" ========================= NERDTree Plugin ===========================
+" ========================= nerdtree plugin ===========================
 let mapleader = ","
 " Using ,ne to show NERDTree Plugin
 nn <leader>ne :NERDTree<CR>
@@ -76,7 +76,7 @@ nn <leader>r  :NERDTreeFind<CR>
 
 let NERDTreeIgnore = ['\.o$', '\.swp$', '\.png']
 
-" ======================= NERDTree Plugin End =========================
+" ======================= nerdtree plugin end =========================
 
 
 " ========================== tagbar plugin ============================
@@ -85,21 +85,23 @@ let g:tagbar_ctags_bin = "/usr/local/ctags/bin/ctags"
 nmap <F8> :TagbarToggle<CR>
 nn ,t :TagbarOpen j<CR>
 
-" ======================== tagbar plugin end ==========================
+" relative line number, 0 don't show linenubmer, 1 absolute linenumbers
+let g:tagbar_show_linenumbers = 2
+
+" ======================== tagbar plugin end ===========================
 
 
-" ====================== Coding Highlight Plugin =======================
+" ========================= airline plugin =============================
 
-" Used for C++ syntax highlight
-"let g:cpp_class_scope_highlight = 1
-"let g:cpp_member_variable_highlight = 1
-"let g:cpp_class_decl_highlight = 1
-"let g:cpp_experimental_simple_template_highlight = 1
-"let g:cpp_concepts_highlight = 1
+ let g:airline#extensions#default#layout = [
+   \ [ 'a', 'b', 'c' ],
+   \ [ 'z', 'error', 'warning' ]
+   \ ]
 
-" ======================================================================
+" ======================= airline plugin end ===========================
 
-" =========================== Programming =============================
+
+" =========================== programming ==============================
 " Indent for programming.
 if has("autocmd")
   " If the filetype is Makefile then we need to use tabs.
@@ -124,7 +126,7 @@ ino {;<CR> {<CR>};<ESC>O
 
 " Using make command requires twice comfiming, add cmdheight to
 " show more message, set shortmess also can short the out message.
-set cmdheight=2
+set cmdheight=1
 set shortmess=a
 
 " Used for running current python script
@@ -141,6 +143,8 @@ function! s:insert_gates()
 endfunction
 autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 
-" ========================= Programming END ===========================
+" ========================= programming end ===========================
 EOF
-" 20 ~ ... lines
+# 20 ~ ... lines
+# r! cat /etc/vim/vimrc.local
+# press ':' and ctrl + r, then hit the " to run the above command
