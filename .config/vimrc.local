@@ -1,6 +1,8 @@
 filetype plugin indent on
-" ========================== general setting ==========================
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" genernal settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nu rnu              " Absolute + Relative number simutaneously
 set ruler               " Show current cursor's positin (rows, cols)
 set encoding=utf-8      " Encoding, default utf-8
@@ -15,13 +17,12 @@ set shiftwidth=2        " Use 2 whitespace to expand tab
 set background=dark     " Background color, default dark
 set t_Co=256            " Force vim into 256 color mode
 
-" <Leader> == ','
 let g:mapleader=","
 
 set foldmethod=indent
 set nofoldenable        " not fold when opening a new file
 set foldlevelstart=20   " Toggle folding
-" set foldlevel=20
+set foldlevel=20
 nnoremap <Space>   za
 
 " Allowing cursor moving in insert mode
@@ -31,8 +32,8 @@ inoremap <C-J> <Down>
 inoremap <C-K> <Up>
 
 " Goto the start or end of current line
-nnoremap <C-H> 0
-nnoremap <C-L> $
+" nnoremap <C-H> 0
+" nnoremap <C-L> $
 
 " Highlight 80th line, and make it gray color
 highlight ColorColumn ctermbg=gray
@@ -53,25 +54,22 @@ autocmd BufWinLeave * call clearmatches()
 set cmdheight=1
 set shortmess=a
 
-" ======================== general setting  end =======================
-
-
-" ======================= Searching Settting ==========================
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" search settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "set showmatch           " Show all matching (searching)
 "set ignorecase          " Ignore case when searching or mathcing
 "set incsearch           " Increse search when searching
 "set hlsearch            " Hightlight the searching or matching
 
-" ===================== Searching Settting End ========================
 
-
-" ========================= nerdtree plugin ===========================
-
-" Using ,ne to show NERDTree Plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" nerdtree plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nn <silent> ,ne :NERDTree<CR>
-" ,r to switch to directory tree
+" Find current file and switch to the directory
 nn <silent> ,r  :NERDTreeFind<CR>
+nn <silent> ,c :NERDTreeToggle<CR>
 
 let NERDTreeIgnore = ['\.o$', '\.swp$', '\.png$']
 
@@ -80,18 +78,10 @@ let NERDTreeShowLineNumbers=1
 autocmd FileType nerdtree setlocal relativenumber
 autocmd BufWinEnter * NERDTreeFind
 
-" Enter vim and open NERDTree and focus on file eidting area.
-for f in argv()
-  if ! isdirectory(f)
-    autocmd VimEnter * NERDTree | wincmd p
-  endif
-endfor
 
-" ======================= nerdtree plugin end =========================
-
-
-" ========================== tagbar plugin ============================
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tagbar plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:tagbar_ctags_bin = "/usr/local/ctags/bin/ctags"
 nmap <F8> :TagbarToggle<CR>
 nnoremap <silent> ,t :TagbarOpen j<CR>
@@ -99,20 +89,19 @@ nnoremap <silent> ,t :TagbarOpen j<CR>
 " relative line number, 0 don't show linenubmer, 1 absolute linenumbers
 let g:tagbar_show_linenumbers = 2
 
-" ======================== tagbar plugin end ===========================
 
-
-" ========================= airline plugin =============================
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" airline plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:airline#extensions#default#layout = [
   \ [ 'a', 'b', 'c' ],
   \ [ 'z', 'error', 'warning' ]
   \ ]
 
-" ======================= airline plugin end ===========================
 
-" ========================== ctrlp plugin ==============================
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ctrlp plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
@@ -125,41 +114,38 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(a|bin|cmake|make|o|out|so|swp)$'
   \ }
 
-" ========================= ctrlp plugin end ============================
 
-
-" =========================== highlight cpp =============================
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" highlight cpp
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 let g:cpp_experimental_simple_template_highlight = 1
 
-" ========================= highlight cpp end ===========================
 
-" ========================== tmuxline plugin ============================
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tmuxline plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:tmuxline_preset = {
   \'a'    : '#S',
   \'win'  : ['#I', '#W'],
   \'cwin' : ['#I', '#W', '#F'],
   \ }
 
-" ======================== tmuxline plugin end ==========================
 
-" =========================== vim-easy-align ============================
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-easy-align plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
-
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-" ========================== vim-easy-align end ==========================
 
-
-" =========================== programming ==============================
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" programming
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("autocmd")
   " If the filetype is Makefile then we need to use tabs.
   " so do not expand tabs into space.
@@ -175,7 +161,6 @@ endif
 " Auto-complete closing character
 ino "      ""<left>
 ino ";     "";<left><left>
-"ino '      ''<left>
 ino (      ()<left>
 ino (;     ();<left><left>
 ino [      []<left>
@@ -186,22 +171,10 @@ ino {;<CR> {<CR>};<ESC>O
 " Python runing current script and read output to vim
 nn <silent> ,py :r! python %
 
-" C, C++ header file add macro automatically
-function! s:insert_gates()
-  let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
-  execute "normal! i#ifndef _" . gatename . "_"
-  execute "normal! o#define _" . gatename . "_"
-  execute "normal! Go#endif /* _" . gatename . "_ */"
-  execute "normal! 2Go"
-  write
-endfunction
-autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 
-" ========================= programming end ===========================
-
-
-" ============================= macros ================================
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" macros
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! CppMain()
   call append("$", "int main(int argc, char** argv)")
   call append("$", "{")
@@ -210,5 +183,3 @@ function! CppMain()
   execute "normal! 2j"
 endfunction
 command Cppmain :call CppMain()
-
-" =========================== macros end ===============================

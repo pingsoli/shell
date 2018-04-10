@@ -4,25 +4,25 @@ filetype off                  " required
 " ======================================================================
 
 " set the runtime path to include Vundle and initialize
-set runtimepath^=~/.vim/bundle/Vundle.vim
+set rtp^=~/.vim/bundle/Vundle.vim
 
 " https://github.com/majutsushi/tagbar
-set runtimepath^=~/.vim/bundle/tagbar
+set rtp^=~/.vim/bundle/tagbar
 
 " https://github.com/vim-airline
-set runtimepath^=~/.vim/bundle/vim-airline
+set rtp^=~/.vim/bundle/vim-airline
 
 " https://github.com/kien/ctrlp.vim
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+set rtp^=~/.vim/bundle/ctrlp.vim
 
 " https://github.com/edkolev/tmuxline.vim
-set runtimepath^=~/.vim/bundle/tmuxline.vim
+set rtp^=~/.vim/bundle/tmuxline.vim
 
 " https://github.com/tpope/vim-fugitive
-set runtimepath^=~/.vim/bundle/vim-fugitive
+set rtp^=~/.vim/bundle/vim-fugitive
 
 " https://github.com/junegunn/vim-easy-align
-set runtimepath^=~/.vim/bundle/vim-easy-align
+set rtp^=~/.vim/bundle/vim-easy-align
 
 " ======================================================================
 " Directory Struture
