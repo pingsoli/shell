@@ -117,8 +117,8 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 
-" ctrlp ignore files and directories
-set wildignore+=*/CMakeFiles
+" Ignore b[B]uild directory
+set wildignore+=*/build/*,*/Build/*
 
 let g:ctrlp_custom_ignore = {
   \ 'dir': '\v[\/]\.(dir|git)$',
@@ -175,7 +175,7 @@ endif
 " Auto-complete closing character
 ino "      ""<left>
 ino ";     "";<left><left>
-ino '      ''<left>
+"ino '      ''<left>
 ino (      ()<left>
 ino (;     ();<left><left>
 ino [      []<left>
