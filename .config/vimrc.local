@@ -31,10 +31,6 @@ inoremap <C-L> <Right>
 inoremap <C-J> <Down>
 inoremap <C-K> <Up>
 
-" Goto the start or end of current line
-" nnoremap <C-H> 0
-" nnoremap <C-L> $
-
 " Highlight 80th line, and make it gray color
 highlight ColorColumn ctermbg=gray
 set colorcolumn=80
@@ -42,7 +38,7 @@ set colorcolumn=80
 " Save current file
 no ,s :update<CR>
 " Show all bookmarks
-nn ,m :marks<ENTER>
+nnoremap ,m :marks<ENTER>
 
 " Show all whitespace and tabs
 set list listchars=trail:•
@@ -66,10 +62,10 @@ set shortmess=a
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " nerdtree plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nn <silent> ,ne :NERDTree<CR>
+nnoremap <silent> ,ne :NERDTree<CR>
 " Find current file and switch to the directory
-nn <silent> ,r  :NERDTreeFind<CR>
-nn <silent> ,c :NERDTreeToggle<CR>
+nnoremap <silent> ,f :NERDTreeFind<CR>
+nnoremap <silent> ,c :NERDTreeToggle<CR>
 
 let NERDTreeIgnore = ['\.o$', '\.swp$', '\.png$']
 
@@ -83,8 +79,8 @@ autocmd BufWinEnter * NERDTreeFind
 " tagbar plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:tagbar_ctags_bin = "/usr/local/ctags/bin/ctags"
-nmap <F8> :TagbarToggle<CR>
-nnoremap <silent> ,t :TagbarOpen j<CR>
+nnoremap <silent> <C-J> :TagbarOpen fj<CR>
+nnoremap <silent> ,t :TagbarToggle<CR>
 
 " relative line number, 0 don't show linenubmer, 1 absolute linenumbers
 let g:tagbar_show_linenumbers = 2
