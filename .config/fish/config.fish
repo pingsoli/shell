@@ -7,3 +7,6 @@ alias cd5="cd ../../../../.."
 alias cd6="cd ../../../../../.."
 
 alias tmux="tmux -2"
+
+# Remove the greeting
+set fish_greeting
