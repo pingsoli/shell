@@ -17,6 +17,7 @@ set tabstop=2
 set softtabstop=2   " Numbers of spaces
 set shiftwidth=2
 
+
 set background=dark " Background color, default dark
 set t_Co=256        " Force vim into 256 color mode
 
@@ -37,16 +38,19 @@ inoremap <C-J> <Down>
 inoremap <C-K> <Up>
 
 " Goto closing character
-nnoremap <Leader>m %
+nnoremap <Leader>q %
 nnoremap <C-h> 0
 nnoremap <C-l> $
 
 " Save current file
 nnoremap <Leader>s :update<CR>
 
+" Quick comment for CPP
+vnoremap // :s:^://<CR>
+
 " Highlight 80th line, and make it gray color
 highlight ColorColumn ctermbg=gray
-set colorcolumn=80
+set colorcolumn=81
 
 set list listchars=trail:•
 
@@ -65,7 +69,7 @@ set shortmess=a
 nnoremap <silent> <Leader>c :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>f :NERDTreeFind<CR>
 
-let g:NERDTreeIgnore        = ['\.o$', '\.swp$', '\.png$']
+let g:NERDTreeIgnore        = ['\.o$', '\.out$', '\.swp$', '\.png$']
 let g:NERDTreeShowHidden    = 1
 let g:NERDTreeChDirMode     = 2
 
@@ -162,6 +166,12 @@ autocmd FileType cpp inoremap <buffer><silent> (;     ();<left><left>
 autocmd FileType cpp inoremap <buffer><silent> {<CR>  {<CR>}<ESC>O
 autocmd FileType cpp inoremap <buffer><silent> {;<CR> {<CR>};<ESC>O
 
+autocmd FileType c inoremap <buffer><silent> "      ""<left>
+autocmd FileType c inoremap <buffer><silent> ";     "";<left><left>
+autocmd FileType c inoremap <buffer><silent> (;     ();<left><left>
+autocmd FileType c inoremap <buffer><silent> {<CR>  {<CR>}<ESC>O
+autocmd FileType c inoremap <buffer><silent> {;<CR> {<CR>};<ESC>O
+
 " Run current script and read output to vim
 autocmd FileType python nnoremap <buffer><silent> ,py :r! python %
 
@@ -170,12 +180,21 @@ autocmd FileType python nnoremap <buffer><silent> ,py :r! python %
 " macros
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! CppMain()
-  call append("$", "int main(int argc, char** argv)")
-  call append("$", "{")
-  call append("$", "  return 0;")
-  call append("$", "}")
+  call append(".", "}")
+  call append(".", "  return 0;")
+  call append(".", "{")
+  call append(".", "int main(int argc, char** argv)")
   execute "normal! 2j"
 endfunction
+
+function TrimWhitespace()
+  let l:save = winsaveview()
+  %s/\s\+$//e
+  call winrestview(l:save)
+endfunction
+
+command! Cppmain        call CppMain()
+command! TrimWhitespace call TrimWhitespace()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
