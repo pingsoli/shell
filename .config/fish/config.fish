@@ -10,3 +10,6 @@ alias tmux="tmux -2"
 
 # Remove the greeting
 set fish_greeting
+
+# fzf
+set -g -x FZF_DEFAULT_COMMAND 'ag -g ""'

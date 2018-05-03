@@ -27,7 +27,7 @@ let g:mapleader=","
 set nofoldenable        " not fold when opening a new file
 set foldmethod=indent
 set foldlevelstart=20
-set foldlevel=20
+" set foldlevel=20
 " Toggle folding
 nnoremap <Space> za
 
@@ -69,9 +69,12 @@ set shortmess=a
 nnoremap <silent> <Leader>c :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>f :NERDTreeFind<CR>
 
-let g:NERDTreeIgnore        = ['\.o$', '\.out$', '\.swp$', '\.png$']
-let g:NERDTreeShowHidden    = 1
-let g:NERDTreeChDirMode     = 2
+let g:NERDTreeIgnore = [
+  \ '\.o$[[file]]', '\.out$[[file]]', '\.swp$[[file]]', '\.png$[[file]]',
+  \ '\.bin$[[dir]]', '\.git$[[dir]]' 
+  \ ]
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeChDirMode  = 2
 
 " NERDTree use relative numbers
 let NERDTreeShowLineNumbers=1
@@ -84,6 +87,8 @@ autocmd FileType nerdtree setlocal relativenumber
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'rw'
+" open window as a new tab
+let g:ctrlp_split_window = 1
 
 " Ctrlp ignore build and CMakeFiles directories
 set wildignore+=*/build/*,*/CMakeFiles/*
@@ -98,7 +103,7 @@ let g:ctrlp_custom_ignore = {
 " tagbar plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:tagbar_ctags_bin = "/usr/local/ctags/bin/ctags"
-nnoremap <silent> <C-J> :TagbarOpen fj<CR>
+nnoremap <silent> <Leader>j :TagbarOpen fj<CR>
 nnoremap <silent> <Leader>t :TagbarToggle<CR>
 
 " 2 relative line number, 0 don't show linenubmer, 1 absolute linenumbers
@@ -108,6 +113,11 @@ let g:tagbar_show_linenumbers = 2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let g:airline#extensions#tabline#enabled = 1
+" Just show the filename (no path) in the tab
+" let g:airline#extensions#tabline#fnamemod = ':t'
+" show table number
+" let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#default#layout = [
   \ [ 'a', 'b', 'c' ],
   \ [ 'z', 'error', 'warning' ]
