@@ -52,7 +52,7 @@ vnoremap // :s:^://<CR>
 highlight ColorColumn ctermbg=gray
 set colorcolumn=81
 
-set list listchars=trail:•
+set list listchars=tab:\ \ ,trail:•
 
 " Resolve performance problems (memory leak)
 autocmd BufWinLeave * call clearmatches()
