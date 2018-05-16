@@ -3,32 +3,35 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype plugin indent on
 
+let g:mapleader=","
+
 set nocompatible    " Use vim defaults instead of 100% vi compatibily
 set nu rnu          " Absolute + Relative number simutaneously
 set ruler           " Show current cursor's positin (rows, cols)
 set encoding=utf-8
 set nowrap          " Nowrap to navigate code
 set mouse=c         " Command line (mouse=a allows mouse operation)
-set smartcase
+
+set hlsearch
 set incsearch
+hi Search cterm=NONE ctermfg=Red ctermbg=LightYellow
+nnoremap <silent> <Leader><Space> :nohlsearch<CR>
+
+set smartcase
 set autoindent
 set expandtab       " Expand tab with whitesapce
 set tabstop=2
 set softtabstop=2   " Numbers of spaces
 set shiftwidth=2
 
-
 set background=dark " Background color, default dark
 set t_Co=256        " Force vim into 256 color mode
 
-let g:mapleader=","
 
 " Folding
 set nofoldenable        " not fold when opening a new file
 set foldmethod=indent
 set foldlevelstart=20
-" set foldlevel=20
-" Toggle folding
 nnoremap <Space> za
 
 " Allowing cursor moving in insert mode
@@ -51,6 +54,7 @@ vnoremap // :s:^://<CR>
 " Highlight 80th line, and make it gray color
 highlight ColorColumn ctermbg=gray
 set colorcolumn=81
+
 
 set list listchars=tab:\ \ ,trail:•
 
@@ -88,7 +92,7 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'rw'
 " open window as a new tab
-let g:ctrlp_split_window = 1
+let g:ctrlp_split_window = 0
 
 " Ctrlp ignore build and CMakeFiles directories
 set wildignore+=*/build/*,*/CMakeFiles/*
