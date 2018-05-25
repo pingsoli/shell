@@ -14,7 +14,7 @@ set mouse=c         " Command line (mouse=a allows mouse operation)
 
 set hlsearch
 set incsearch
-hi Search cterm=NONE ctermfg=Red ctermbg=LightYellow
+highlight Search cterm=NONE ctermfg=black ctermbg=gray
 nnoremap <silent> <Leader><Space> :nohlsearch<CR>
 
 set smartcase
