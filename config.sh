@@ -58,10 +58,9 @@ case "$1" in
 
   push)
     if [ "$#" -ne 2 ]; then
-      echo "no commit message"
+      echo -e "no commit message\nusage: ./config.sh push <msg> [branch]"
       exit 2
     fi
-
     push "$2"
     ;;
 
