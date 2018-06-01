@@ -31,6 +31,18 @@ function backup()
 #  mkdir "$HOME/.vim/syntax"
 #}
 
+function push()
+{
+  if [ "$#" -ne 1 ] && [ "$1" -z ]; then
+    echo "no commit message parameter"
+    exit 2
+  fi
+
+  git add .
+  git commit -m "$1"
+  git push origin master
+}
+
 ###############################################################################
 # Install vim plugins
 ###############################################################################
@@ -47,10 +59,13 @@ case "$1" in
     ;;
 
   init)
-    echo "there is nothing"
+    ;;
+
+  push)
+    push $2
     ;;
 
   *)
-    echo $"Usage: $0 { backup | init }"
+    echo -e $"Usage: $0 { backup | init | push <msg> [branch] }"
     exit 1
 esac

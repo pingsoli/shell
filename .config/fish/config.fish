@@ -1,4 +1,4 @@
-# Swtich directory quickly
+# Aliases for all shelles
 alias ..="cd .."
 alias .1="cd .."
 alias .2="cd ../.."
@@ -10,19 +10,25 @@ alias .6="cd ../../../../../.."
 # Tmux 256 color-mode
 alias tmux="tmux -2"
 
-# aliases typo
+# Typo aliases
 alias maek="make"
 alias meak="make"
 alias amek="make"
 alias mkae="make"
 alias mak="make"
 
+set -g MY_WORKSPACE $HOME/workspace
+
+# Convenient aliases
+alias cdw="cd $MY_WORKSPACE"
 alias vi="vim"
 alias vimconfig="vim ~/.vimrc"
+
 alias fishconfig="vim ~/.config/fish/config.fish"
+alias cdfish="cd ~/.config/fish"
 alias sourcefish="source ~/.config/fish/config.fish"
 
-# Remove fish shell greeting
+# Set fish shell greeting based 
 set fish_greeting
 
 # fzf
