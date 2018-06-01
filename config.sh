@@ -33,13 +33,8 @@ function backup()
 
 function push()
 {
-  if [ "$#" -ne 1 ] && [ "$1" -z ]; then
-    echo "no commit message parameter"
-    exit 2
-  fi
-
   git add .
-  git commit -m "$1"
+  git commit -m "\"$1\""
   git push origin master
 }
 
@@ -62,7 +57,12 @@ case "$1" in
     ;;
 
   push)
-    push $2
+    if [ "$#" -ne 2 ]; then
+      echo "no commit message"
+      exit 2
+    fi
+
+    push "$2"
     ;;
 
   *)
