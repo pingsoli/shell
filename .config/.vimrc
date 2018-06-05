@@ -2,7 +2,6 @@
 " general settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype plugin indent on
-
 let g:mapleader=","
 
 set nocompatible    " Use vim defaults instead of 100% vi compatibily
@@ -12,6 +11,7 @@ set encoding=utf-8
 set nowrap          " Nowrap to navigate code
 set mouse=c         " Command line (mouse=a allows mouse operation)
 
+" Searching configuration
 set hlsearch
 set incsearch
 highlight Search cterm=NONE ctermfg=black ctermbg=gray
@@ -71,7 +71,7 @@ set shortmess=a
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Find current file and switch to the directory
 nnoremap <silent> <Leader>c :NERDTreeToggle<CR>
-nnoremap <silent> <Leader>f :NERDTreeFind<CR>
+nnoremap <silent> <Leader>l :NERDTreeFind<CR>
 
 let g:NERDTreeIgnore = [
   \ '\.o$[[file]]', '\.out$[[file]]', '\.swp$[[file]]', '\.png$[[file]]',
@@ -113,15 +113,11 @@ nnoremap <silent> <Leader>t :TagbarToggle<CR>
 " 2 relative line number, 0 don't show linenubmer, 1 absolute linenumbers
 let g:tagbar_show_linenumbers = 2
 
+set tags=./tags;,tags
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:airline#extensions#tabline#enabled = 1
-" Just show the filename (no path) in the tab
-" let g:airline#extensions#tabline#fnamemod = ':t'
-" show table number
-" let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#default#layout = [
   \ [ 'a', 'b', 'c' ],
   \ [ 'z', 'error', 'warning' ]
@@ -159,8 +155,7 @@ nmap ga <Plug>(EasyAlign)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " program based on file type
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Edit Makefile using tabs substitute space
-" Indent based on filetype
+" Edit Makefile using tabs substitute space, Indent based on filetype
 autocmd FileType make       setlocal noexpandtab
 autocmd FileType make       setlocal list listchars=tab:>-
 autocmd FileType html       setlocal shiftwidth=4 tabstop=4
@@ -174,17 +169,11 @@ inoremap <silent> {<CR> {<CR>}<ESC>O
 inoremap <silent> [     []<left>
 
 " Shortcuts only for cpp, auto-complete closing characters
-autocmd FileType cpp inoremap <buffer><silent> "      ""<left>
-autocmd FileType cpp inoremap <buffer><silent> ";     "";<left><left>
-autocmd FileType cpp inoremap <buffer><silent> (;     ();<left><left>
-autocmd FileType cpp inoremap <buffer><silent> {<CR>  {<CR>}<ESC>O
-autocmd FileType cpp inoremap <buffer><silent> {;<CR> {<CR>};<ESC>O
-
-autocmd FileType c inoremap <buffer><silent> "      ""<left>
-autocmd FileType c inoremap <buffer><silent> ";     "";<left><left>
-autocmd FileType c inoremap <buffer><silent> (;     ();<left><left>
-autocmd FileType c inoremap <buffer><silent> {<CR>  {<CR>}<ESC>O
-autocmd FileType c inoremap <buffer><silent> {;<CR> {<CR>};<ESC>O
+autocmd FileType c,cpp inoremap <buffer><silent> "      ""<left>
+autocmd FileType c,cpp inoremap <buffer><silent> ";     "";<left><left>
+autocmd FileType c,cpp inoremap <buffer><silent> (;     ();<left><left>
+autocmd FileType c,cpp inoremap <buffer><silent> {<CR>  {<CR>}<ESC>O
+autocmd FileType c,cpp inoremap <buffer><silent> {;<CR> {<CR>};<ESC>O
 
 " Run current script and read output to vim
 autocmd FileType python nnoremap <buffer><silent> ,py :r! python %
@@ -194,14 +183,14 @@ autocmd FileType python nnoremap <buffer><silent> ,py :r! python %
 " macros
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! CppMain()
-  call append(".", "}")
-  call append(".", "  return 0;")
-  call append(".", "{")
-  call append(".", "int main(int argc, char** argv)")
-  execute "normal! 2j"
+  call append("$", "int main(int argc, char *argv[])")
+  call append("$", "{")
+  call append("$", "  return 0;")
+  call append("$", "}")
+  norm 2j
 endfunction
 
-function TrimWhitespace()
+function! TrimWhitespace()
   let l:save = winsaveview()
   %s/\s\+$//e
   call winrestview(l:save)
@@ -212,42 +201,22 @@ command! TrimWhitespace call TrimWhitespace()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" .vim
-" ├── bundle
-" │   ├── ctrlp.vim
-" │   ├── nerdtree
-" │   ├── nerdtree-git-plugin
-" │   ├── tagbar
-" │   ├── tmuxline.vim
-" │   ├── vim-airline
-" │   ├── vim-easy-align
-" │   └── vim-fugitive
-" ├── plugin
-" │   └── a.vim
-" └── syntax
-"     └── cpp.vim
-"
-" a.vim:   https://vim.sourceforge.io/scripts/script.php?script_id=31
-" cpp.vim: https://github.com/octol/vim-cpp-enhanced-highlight/blob/master/after/syntax/cpp.vim
+" plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" https://github.com/scrooloose/nerdtree
-set rtp+=~/.vim/bundle/nerdtree
-set rtp+=~/.vim/bundle/nerdtree-git-plugin
+" vim-plug plugin manager downloader
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" https://github.com/kien/ctrlp.vim
-set rtp+=~/.vim/bundle/ctrlp.vim
-
-" https://github.com/majutsushi/tagbar
-set rtp+=~/.vim/bundle/tagbar
-
-" https://github.com/vim-airline
-set rtp+=~/.vim/bundle/vim-airline
-
-" https://github.com/edkolev/tmuxline.vim
-set rtp+=~/.vim/bundle/tmuxline.vim
-
-" https://github.com/tpope/vim-fugitive
-set rtp+=~/.vim/bundle/vim-fugitive
-
-" https://github.com/junegunn/vim-easy-align
-set rtp+=~/.vim/bundle/vim-easy-align
+call plug#begin('~/.vim/bundle')
+Plug 'scrooloose/nerdtree'
+Plug 'junegunn/vim-easy-align'
+Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-fugitive'
+Plug 'edkolev/tmuxline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+call plug#end()

@@ -27,6 +27,7 @@ alias vimconfig="vim ~/.vimrc"
 alias fishconfig="vim ~/.config/fish/config.fish"
 alias cdfish="cd ~/.config/fish"
 alias sourcefish="source ~/.config/fish/config.fish"
+alias tmuxconfig="vim ~/.tmux.conf"
 
 # Set fish shell greeting based 
 set fish_greeting
