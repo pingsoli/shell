@@ -201,6 +201,20 @@ command! TrimWhitespace call TrimWhitespace()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" YouCompleteMe
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ycm_global_ycm_extra_conf="~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+let g:ycm_complete_in_comments=1
+
+let g:ycm_show_diagnostics_ui = 0
+set completeopt-=preview
+
+let g:ycm_semantic_triggers = {
+  \ 'c,cpp' : ['re!\w{2}'],
+  \ }
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug plugin manager downloader
@@ -218,5 +232,5 @@ Plug 'tpope/vim-fugitive'
 Plug 'edkolev/tmuxline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe'
 call plug#end()
