@@ -1,15 +1,18 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " general settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype plugin indent on
 let g:mapleader=","
 
-set nocompatible    " Use vim defaults instead of 100% vi compatibily
-set nu rnu          " Absolute + Relative number simutaneously
-set ruler           " Show current cursor's positin (rows, cols)
+" Use vim defaults instead of 100% vi compatibily
+set nocompatible
+" Absolute + Relative number simutaneously
+set nu rnu
+" Show current cursor's positin (rows, cols)
+set ruler
 set encoding=utf-8
-set nowrap          " Nowrap to navigate code
-set mouse=c         " Command line (mouse=a allows mouse operation)
+set nowrap
+set mouse=c
 
 " Searching configuration
 set hlsearch
@@ -19,17 +22,18 @@ nnoremap <silent> <Leader><Space> :nohlsearch<CR>
 
 set smartcase
 set autoindent
-set expandtab       " Expand tab with whitesapce
+" Expandtab with whitespace
+set expandtab
 set tabstop=2
-set softtabstop=2   " Numbers of spaces
+set softtabstop=2
 set shiftwidth=2
 
-set background=dark " Background color, default dark
-set t_Co=256        " Force vim into 256 color mode
-
+set background=dark
+set t_Co=256
 
 " Folding
-set nofoldenable        " not fold when opening a new file
+" not fold when opening a new file
+set nofoldenable
 set foldmethod=indent
 set foldlevelstart=20
 nnoremap <Space> za
@@ -66,11 +70,11 @@ set cmdheight=1
 set shortmess=a
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nerdtree plugin settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" nerdtree
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Find current file and switch to the directory
-nnoremap <silent> <Leader>c :NERDTreeToggle<CR>
+nnoremap <silent> <Leader>w :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>l :NERDTreeFind<CR>
 
 let g:NERDTreeIgnore = [
@@ -85,27 +89,39 @@ let NERDTreeShowLineNumbers=1
 autocmd FileType nerdtree setlocal relativenumber
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ctrlp plugin settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'rw'
-" open window as a new tab
-let g:ctrlp_split_window = 0
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" nerdcommeter
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Add spaces after commet delimiters by default
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
 
-" Ctrlp ignore build and CMakeFiles directories
-set wildignore+=*/build/*,*/CMakeFiles/*
-
-let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v[\/]\.(dir|git)$',
-  \ 'file': '\v\.(a|bin|cmake|make|o|out|so|swp)$'
-  \ }
+let g:NERDCommetEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDDefaultAlign = 'left'
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" tagbar plugin settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ctrlp
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let g:ctrlp_map = '<c-p>'
+"let g:ctrlp_cmd = 'CtrlP'
+"let g:ctrlp_working_path_mode = 'rw'
+"" open window as a new tab
+"let g:ctrlp_split_window = 0
+"
+"" Ctrlp ignore build and CMakeFiles directories
+"set wildignore+=*/build/*,*/CMakeFiles/*
+"
+"let g:ctrlp_custom_ignore = {
+"  \ 'dir': '\v[\/]\.(dir|git)$',
+"  \ 'file': '\v\.(a|bin|cmake|make|o|out|so|swp)$'
+"  \ }
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tagbar
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:tagbar_ctags_bin = "/usr/local/ctags/bin/ctags"
 nnoremap <silent> <Leader>j :TagbarOpen fj<CR>
 nnoremap <silent> <Leader>t :TagbarToggle<CR>
@@ -115,27 +131,27 @@ let g:tagbar_show_linenumbers = 2
 
 set tags=./tags;,tags
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" airline plugin settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" airline
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:airline#extensions#default#layout = [
   \ [ 'a', 'b', 'c' ],
   \ [ 'z', 'error', 'warning' ]
   \ ]
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " highlight cpp
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:cpp_class_scope_highlight                  = 1
 let g:cpp_member_variable_highlight              = 1
 let g:cpp_class_decl_highlight                   = 1
 let g:cpp_experimental_simple_template_highlight = 1
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" tmuxline plugin settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tmuxline
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:tmuxline_preset = {
   \'a'    : '#S',
   \'win'  : ['#I', '#W'],
@@ -144,7 +160,7 @@ let g:tmuxline_preset = {
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-easy-align plugin settings
+" vim-easy-align
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -152,9 +168,9 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " program based on file type
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Edit Makefile using tabs substitute space, Indent based on filetype
 autocmd FileType make       setlocal noexpandtab
 autocmd FileType make       setlocal list listchars=tab:>-
@@ -179,9 +195,9 @@ autocmd FileType c,cpp inoremap <buffer><silent> {;<CR> {<CR>};<ESC>O
 autocmd FileType python nnoremap <buffer><silent> ,py :r! python %
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" macros
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" custom functions
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! CppMain()
   call append("$", "int main(int argc, char *argv[])")
   call append("$", "{")
@@ -200,23 +216,26 @@ command! Cppmain        call CppMain()
 command! TrimWhitespace call TrimWhitespace()
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" YouCompleteMe
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" youcompleteme
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ycm_global_ycm_extra_conf="~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 let g:ycm_complete_in_comments=1
-
 let g:ycm_show_diagnostics_ui = 0
 set completeopt-=preview
+
+" Debug for youcompleteme
+let g:ycm_keep_logfiles = 1
+let g:ycm_log_level = 'debug'
 
 let g:ycm_semantic_triggers = {
   \ 'c,cpp' : ['re!\w{2}'],
   \ }
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" plugin
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-plug (vim plugins manager)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug plugin manager downloader
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -226,6 +245,7 @@ endif
 
 call plug#begin('~/.vim/bundle')
 Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/vim-easy-align'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-fugitive'
@@ -233,4 +253,5 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'Valloric/YouCompleteMe'
+Plug 'tpope/vim-surround'
 call plug#end()

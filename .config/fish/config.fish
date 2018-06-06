@@ -17,20 +17,8 @@ alias amek="make"
 alias mkae="make"
 alias mak="make"
 alias sl="ls"
-alias l="ll"
 
-set -g MY_WORKSPACE $HOME/workspace
-
-# Convenient aliases
-alias cdw="cd $MY_WORKSPACE"
-alias vi="vim"
-alias vimconfig="vim ~/.vimrc"
-
-alias cdfish="cd ~/.config/fish"
-alias fishconfig="vim ~/.config/fish/config.fish"
-alias sourcefish="source ~/.config/fish/config.fish"
-alias tmuxconfig="vim ~/.tmux.conf"
-alias bashconfig="sudo vim /etc/bash.bashrc"
+set -gx FISH_PATH $HOME/.config/fish
 
 # Set fish shell greeting based
 set fish_greeting
@@ -38,3 +26,4 @@ set fish_greeting
 # pyenv (python version manager)
 set -gx PYENV $HOME/.pyenv
 set -gx PATH $PYENV/bin $PATH
+source (pyenv init - | psub)

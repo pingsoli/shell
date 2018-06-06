@@ -8,6 +8,7 @@ VIM_CONF="$HOME/.vimrc"
 VIM_A_PLUGIN="$HOME/.vim/plugin/a.vim"
 TMUX_CONF="$HOME/.tmux.conf"
 FISH_CONF="$HOME/.config/fish"
+YCM_CONF="$HOME/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 
 BACKUP_DIR="./.config"
 
@@ -22,14 +23,8 @@ function backup()
   cp    "$VIM_CONF"     "$BACKUP_DIR"
   cp    "$VIM_A_PLUGIN" "$BACKUP_DIR"
   cp    "$TMUX_CONF"    "$BACKUP_DIR"
+  cp    "$YCM_CONF"     "$BACKUP_DIR"
 }
-
-#function init()
-#{
-#  mkdir "$HOME/.vim"
-#  mkdir "$HOME/.vim/plugin"
-#  mkdir "$HOME/.vim/syntax"
-#}
 
 function push()
 {
@@ -38,22 +33,9 @@ function push()
   git push origin master
 }
 
-###############################################################################
-# Install vim plugins
-###############################################################################
-# function install_vim_plugins()
-# {
-#  cd "$HOME"
-
-# clone all repository
-# }
-
 case "$1" in
   backup)
     backup
-    ;;
-
-  init)
     ;;
 
   push)
@@ -65,6 +47,6 @@ case "$1" in
     ;;
 
   *)
-    echo -e $"Usage: $0 { backup | init | push <msg> [branch] }"
+    echo -e $"Usage: $0 { backup | push <msg> [branch] }"
     exit 1
 esac
