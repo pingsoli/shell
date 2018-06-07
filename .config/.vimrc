@@ -14,15 +14,38 @@ set encoding=utf-8
 set nowrap
 set mouse=c
 
-" Searching configuration
+" Searching
 set hlsearch
 set incsearch
+set ignorecase
+set smartcase
 highlight Search cterm=NONE ctermfg=black ctermbg=gray
 nnoremap <silent> <Leader><Space> :nohlsearch<CR>
 
-set smartcase
+" Popup background color for autocomplete selected item
+highlight PmenuSel ctermfg=NONE ctermbg=24 cterm=NONE
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Performance options
+" Limit the files searched for auto-completes
+set complete-=i
+" Don't update screen during macro and script execution
+set lazyredraw
+" Don't make a backup when overwriting a file, high memory useage.
+" set nobackup
+
+augroup general
+  autocmd!
+  " Resolve performance problems (memory leak)
+  autocmd BufWinLeave * call clearmatches()
+augroup general
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" New lines inherit the indentation of previous line
 set autoindent
-" Expandtab with whitespace
+" Convert tabs to whitespace
 set expandtab
 set tabstop=2
 set softtabstop=2
@@ -36,6 +59,7 @@ set t_Co=256
 set nofoldenable
 set foldmethod=indent
 set foldlevelstart=20
+set foldnestmax=3
 nnoremap <Space> za
 
 " Allowing cursor moving in insert mode
@@ -59,11 +83,7 @@ vnoremap // :s:^://<CR>
 highlight ColorColumn ctermbg=gray
 set colorcolumn=81
 
-
 set list listchars=tab:\ \ ,trail:•
-
-" Resolve performance problems (memory leak)
-autocmd BufWinLeave * call clearmatches()
 
 " Show less output message in vim
 set cmdheight=1
@@ -86,17 +106,20 @@ let g:NERDTreeChDirMode  = 2
 
 " NERDTree use relative numbers
 let NERDTreeShowLineNumbers=1
-autocmd FileType nerdtree setlocal relativenumber
+augroup nerdtree
+  autocmd!
+  autocmd FileType nerdtree setlocal relativenumber
+augroup END
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nerdcommeter
+" nerdcommenter
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Add spaces after commet delimiters by default
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
 
-let g:NERDCommetEmptyLines = 1
+let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDDefaultAlign = 'left'
 
@@ -134,6 +157,7 @@ set tags=./tags;,tags
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:airline#extensions#whitespace#enables = 0
 let g:airline#extensions#default#layout = [
   \ [ 'a', 'b', 'c' ],
   \ [ 'z', 'error', 'warning' ]
@@ -153,7 +177,6 @@ let g:cpp_experimental_simple_template_highlight = 1
 " tmuxline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:tmuxline_preset = {
-  \'a'    : '#S',
   \'win'  : ['#I', '#W'],
   \'cwin' : ['#I', '#W', '#F'],
   \ }
@@ -171,29 +194,30 @@ nmap ga <Plug>(EasyAlign)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " program based on file type
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Edit Makefile using tabs substitute space, Indent based on filetype
-autocmd FileType make       setlocal noexpandtab
-autocmd FileType make       setlocal list listchars=tab:>-
-autocmd FileType html       setlocal shiftwidth=4 tabstop=4
-autocmd FileType java       setlocal shiftwidth=4 tabstop=4
-autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
-autocmd FileType python     setlocal shiftwidth=4 tabstop=4
-
 inoremap <silent> (     ()<left>
 inoremap <silent> {     {}<left>
 inoremap <silent> {<CR> {<CR>}<ESC>O
 inoremap <silent> [     []<left>
 
-" Shortcuts only for cpp, auto-complete closing characters
-autocmd FileType c,cpp inoremap <buffer><silent> "      ""<left>
-autocmd FileType c,cpp inoremap <buffer><silent> ";     "";<left><left>
-autocmd FileType c,cpp inoremap <buffer><silent> (;     ();<left><left>
-autocmd FileType c,cpp inoremap <buffer><silent> {<CR>  {<CR>}<ESC>O
-autocmd FileType c,cpp inoremap <buffer><silent> {;<CR> {<CR>};<ESC>O
+augroup filetype_indent
+  autocmd!
+  " Edit Makefile using tabs substitute space, Indent based on filetype
+  autocmd FileType make       setlocal noexpandtab
+  autocmd FileType make       setlocal list listchars=tab:>-
+  autocmd FileType html       setlocal shiftwidth=4 tabstop=4
+  autocmd FileType java       setlocal shiftwidth=4 tabstop=4
+  autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
+  autocmd FileType python     setlocal shiftwidth=4 tabstop=4
 
-" Run current script and read output to vim
-autocmd FileType python nnoremap <buffer><silent> ,py :r! python %
+  " Shortcuts only for cpp, auto-complete closing characters
+  autocmd FileType c,cpp inoremap <buffer><silent> "      ""<left>
+  autocmd FileType c,cpp inoremap <buffer><silent> ";     "";<left><left>
+  autocmd FileType c,cpp inoremap <buffer><silent> (;     ();<left><left>
+  autocmd FileType c,cpp inoremap <buffer><silent> {;<CR> {<CR>};<ESC>O
 
+  " Run current script and read output to vim
+  autocmd FileType python nnoremap <buffer><silent> ,py :r! python %
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " custom functions
@@ -219,6 +243,7 @@ command! TrimWhitespace call TrimWhitespace()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " youcompleteme
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ycm_collect_identifiers_from_tags_files = 0
 let g:ycm_global_ycm_extra_conf="~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 let g:ycm_complete_in_comments=1
 let g:ycm_show_diagnostics_ui = 0
@@ -244,14 +269,20 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/bundle')
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
-Plug 'junegunn/vim-easy-align'
-Plug 'majutsushi/tagbar'
-Plug 'tpope/vim-fugitive'
-Plug 'edkolev/tmuxline.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'Valloric/YouCompleteMe'
-Plug 'tpope/vim-surround'
+
+  Plug 'scrooloose/nerdtree'
+  Plug 'scrooloose/nerdcommenter'
+  Plug 'junegunn/vim-easy-align'
+  Plug 'majutsushi/tagbar'
+
+  " NOTE: vim-fugitive conficts with vim-airline
+"  Plug 'tpope/vim-fugitive'
+  Plug 'vim-airline/vim-airline'
+  Plug 'edkolev/tmuxline.vim'
+
+  Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+  Plug 'tpope/vim-surround'
+  Plug 'Valloric/YouCompleteMe', { 'for': 'cpp' }
+  autocmd! User YouCompleteMe if !has('vim_starting') | call youcompleteme#Enable() | endif
+
 call plug#end()
