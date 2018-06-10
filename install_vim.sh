@@ -6,3 +6,5 @@
   --with-python3-command=~/.pyenv/versions/3.6.5/bin/python3.6
 
 make && make install
+
+wget --directory-prefix=~ https://raw.githubusercontent.com/pingsoli/dotfiles/master/.vimrc ~
