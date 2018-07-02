@@ -20,6 +20,9 @@ git clone https://github.com/pingsoli/dotfiles.git
 sudo apt-get install -y git cmake curl
 sudo apt-get install -y htop iftop tcpdump
 
+# for ag (https://github.com/ggreer/the_silver_searcher)
+sudo apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+
 # samba network sharing service
 sudo apt-get install -y cifs-utils
 
