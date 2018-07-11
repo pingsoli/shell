@@ -3,11 +3,12 @@
 ################################################################################
 # fish shell installation
 ################################################################################
-sudo apt-add-repository ppa:fish-shell/release-2
-sudo apt update
-sudo apt install fish
+sudo apt-add-repository -y ppa:fish-shell/release-2
+# sudo apt-get update
+# sudo apt-get install fish
 
-# Set fish shell as default shell
-chsh -s /usr/bin/fish
+# Set fish shell as default shell, need input password
+# chsh -s /usr/bin/fish
 
 # fish configure file initialization
+# copy all settings files from github.

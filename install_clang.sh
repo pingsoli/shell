@@ -21,5 +21,3 @@ sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-6.0 1000
 # If you use bash shell, please add this to your /etc/bash.bashrc
 #  export CC=/usr/bin/clang
 #  export CXX=/usr/bin/clang++
-
-################################################################################
