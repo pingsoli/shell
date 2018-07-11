@@ -1,0 +1,39 @@
+#!/bin/bash
+
+source func
+
+BASH_CONF_FILE=/etc/bash.bashrc
+
+cd_quick_set=`get_value .config cd_quick_set`
+if [ -f $BASH_CONF_FILE ] && [ "$cd_quick_set" = "no" ]; then 
+
+  # Switch directory quickly
+cat << END >> $BASH_CONF_FILE
+  
+  alias cd1="cd .."
+  alias cd2="cd ../.."
+  alias cd3="cd ../../.."
+  alias cd4="cd ../../../.."
+  alias cd5="cd ../../../../.."
+
+END
+
+  write_to .config cd_quick_set yes
+  print_info "cd quick set" "Done"
+fi
+
+
+# install_and_config (1: software_name) (2: configure_filename) 
+#                    (3: key_in_configure_file)
+
+# install openssh
+install_and_config openssh-server .config openssh_has_installed
+
+# install tree 
+install_and_config tree .config tree_has_installed
+
+# install sl, just for fun
+install_and_config sl .config sl_has_installed
+
+# install cmake 
+install_and_config cmake .config cmake_has_installed

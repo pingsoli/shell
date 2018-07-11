@@ -1,0 +1,37 @@
+#!/bin/bash
+
+SRC_LIST_FILE=/etc/apt/sources.list
+
+src_has_configured=`get_value .config source_list_configured`
+
+if [ -f $SRC_LIST_FILE ] && [ "$src_has_configured" != "yes" ]; then
+
+  # Backup source list
+  mv $SRC_LIST_FILE $SRC_LIST_FILE.bak
+
+  cat << END > $SRC_LIST_FILE
+
+# USTC (University of Science and Technology of Thina)
+# xenial is ubuntu 16.04 version
+deb http://mirrors.ustc.edu.cn/ubuntu/ xenial main restricted universe multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-security main restricted universe multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ xenial main restricted universe multiverse
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ xenial-security main restricted universe multiverse
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse
+
+END
+
+  # Write to configure file
+  write_to .config source_list_configured yes
+
+  # Update source list
+  apt-get update 
+
+fi
+
+

@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# load func lib
+# source func
+
+VIM_CONF_FILE=/etc/vim/vimrc.local
+
+install_software vim
+
+if [ $? -ne 0 ]; then 
+  exit
+fi
+
+# Modify to vim_has_installed = yes in .config file
+write_to .config vim_has_installed yes
+
+# Check vim configuration whether exists
+if [ ! -f "$VIM_CONF_FILE" ]; then 
+  touch $VIM_CONF_FILE
+
+# Modify global vim configure
+cat << END >> $VIM_CONF_FILE
+set nu                          " show line number
+set background=dark             " set background
+set encoding=utf-8              " set encoding
+set tabstop=4                   " set tab space 
+set softtabstop=4
+set wrap                        " auto wrap
+set autoindent
+set showmatch
+set mouse=a                     " allow use mouse in vim 
+set expandtab                   " use whitespace represent tab
+set backspace=eol,start,indent  " allow backspace to delete
+END
+
+fi # end if 
+
+# Modify configure file 
+# vim_has_configured = yes
+write_to .config vim_has_configured yes
+
+# Print infomation to screen
+print_info 'VIM' 'Installed'
+print_info 'VIM Configure' 'Done' 

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+source func
+
+# Init .config file
+# It should be executed before installing
+# Default all value set to "no"
+# If you specify "yes", all value will be set to "yes"
+
+if [ $# -eq 0 ]; then
+  init .config
+elif [ $# -eq 1 -a "$1" = "yes" ]; then 
+  init .config yes 
+fi
+
+
+

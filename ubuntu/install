@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Load func
+# Utils function
+source func
+
+##################################################
+# Init config file
+if [ ! -f .config ]; then
+  print_err ".config is not exists"
+fi
+
+has_ever_run=`get_value .config has_executed`
+if [ "$has_ever_run" = "no" ]; then 
+  init .config
+  write_to .config has_executed yes
+fi
+
+##################################################
+# Update source list 
+source source-list
+
+##################################################
+# Check os whether is Ubuntu, or quit the shell
+check_os
+
+##################################################
+# Check current user whether is superuser 
+CURRENT_USER=`whoami`
+
+if [ "$CURRENT_USER" != "root" ]; then
+  print_err "permission denied, need superuser"
+fi
+
+##################################################
+
+source vimrc
+source utils
+
+list_undone .config 
+

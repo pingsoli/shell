@@ -1,0 +1,188 @@
+#!/bin/bash
+
+# Print error message to screen and exit shell
+print_err()
+{
+  if [ $# -eq 1 ]; then
+    echo -e "\033[40;31m[ ERROR ]: $1 \033[0m"
+    exit 1
+  fi
+}
+
+# Print warning message to screen
+print_warn()
+{
+  if [ $# -eq 1 ]; then
+    echo -e "\033[40;33m[ WARNING ]: $1 \033[0m"
+  fi
+}
+
+# Print normal infomation to screen
+# pass two parameters, as following
+# VIM           :   Installed
+# pass one parameter
+# show the infomation
+print_info()
+{ 
+  bytes=`echo $1 | wc -L`
+  
+  if [ $# -eq 2 ]; then 
+    if [ $bytes -lt 8 ]; then
+      echo -e "$1\t\t\t:\t$2"
+    elif [ $bytes -ge 8 -a $bytes -lt 16 ]; then
+      echo -e "$1\t\t:\t$2"
+    else 
+      echo -e "$1\t:\t$2"
+    fi
+  elif [ $# -eq 1 ]; then
+    echo -e "$1"
+  else 
+    print_err "function `basename $0` wrong arguments"
+  fi
+}
+
+
+# Check os whether is Ubuntu
+# if not, exit
+check_os()
+{
+  local file=/etc/issue
+  if [ ! -f $file -a -z "`cat $file | grep -i ubuntu`" ]; then
+    print_err "ubuntu os is required"
+  fi
+
+  # Print os information
+  print_info 'Operating System' 'Ubuntu'
+}
+
+
+to_upper()
+{
+  if [ $# -eq 1 ]; then
+    echo `echo $1 | tr '[a-z]' '[A-Z]'`
+  fi
+}
+
+to_lower()
+{
+  if [ $# -eq 1 ]; then 
+    echo `echo $1 | tr '[A-Z]' '[a-z]'`
+  fi
+}
+
+
+get_value()
+{
+  # first parameter: configure file name
+  # second parameter: key
+  # function return value got from the file
+  if [ $# -eq 2 ]; then
+    echo `cat $1 | grep $2 | awk -F'=' '{ print $2 }' | sed s/[[:space:]]//g`
+    return 0
+  fi
+  print_err "function `basename $0` wrong parameter"
+}
+
+
+
+# example: write_to .config vim_has_installed yes
+write_to()
+{
+  # first parameter: configure file name
+  # second parameter: key
+  # third parameter: value set
+  if [ $# -eq 3 ]; then 
+    sed -i -e "s/^$2\(.*\)/$2 = $3/g" $1
+    return 0
+  fi
+  print_err "function `basename $0` too many arguments"
+}
+
+
+
+# Init all value to "no" in .config file
+init()
+{
+  if [ $# -eq 1 ]; then
+    sed -i -e 's/\(.*\) = \(.*\)/\1 = no/g' $1
+  elif [ $# -eq 2 -a "$2" = "yes" ]; then
+    sed -i -e 's/\(.*\) = \(.*\)/\1 = yes/g' $1
+  fi
+}
+
+# Install software 
+# Recusively install software 
+install_software() 
+{
+  local apt_lock_file=/var/lib/dpkg/lock
+  local has_errors=no
+  
+  for i in $*
+  do
+    # Check software whether is installed, if yes, skip to next 
+    if [ "`dpkg -l | awk '{print $2}' | eval grep -w '^$i$'`" = "$i" ]; then
+      print_info "[ $i ] has installed"
+      continue
+    fi
+
+    print_info "============ start to install $i =============="
+
+    # install software and start to log
+    apt-get -y install $i
+    
+    if [ $? -ne 0 ]; then 
+      print_warn "try to reinstall again"
+      rm -rf $apt_lock_file /var/cache/apt/archives/lock
+      apt-get -y install $i
+      if [ $? -ne 0 ]; then 
+        print_warn "install $i failed"
+        has_errors=yes
+        continue
+      fi
+    fi
+
+    print_info "============= install $i finished =============="
+
+  done
+
+  if [ "$has_errors" = "yes" ]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+# Encapsulate install_software 
+# install software and write infomation to configure file
+install_and_config()
+{
+  # first argument: software name
+  # second argument: config filename
+  # third argument: key wanted to modify
+  
+  if [ $# -eq 3 ]; then 
+    install_software $1
+
+    if [ $? -eq 0 ]; then 
+      write_to $2 $3 yes
+      return 0
+    fi
+  fi
+
+  write_to $2 $3 no
+  return 1
+}
+
+
+# List all tasks has not finished
+# Scan configure file and print to screen
+list_undone()
+{
+  # first arugment: configure file name
+  
+  echo -e "\n=============== undone list ==================="
+  if [ $# -eq 1 ]; then 
+    grep -w '.*= no' $1 | awk '{print $1" is not done"}'
+  fi
+}
+
