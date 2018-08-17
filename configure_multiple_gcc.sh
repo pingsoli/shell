@@ -7,6 +7,7 @@ sudo update-alternatives --remove-all gcc
 sudo update-alternatives --remove-all g++
 sudo apt-get install -y gcc-4.8 g++-4.8 gcc-4.9 g++-4.9 gcc-5 g++-5 gcc-6 g++-6 gcc-7 g++-7
 
+# sudo update-alternatives --install link name path priority
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 10
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 20
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 30
