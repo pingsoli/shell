@@ -6,26 +6,35 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 ################################################################################
-# Prequisite
+# Prequisites
 ################################################################################
-mkdir ~/workspace && cd ~/workspace
+MY_HOME="/home/pingsoli"
+MY_WORKSPACE="$MY_HOME/workspace"
 
-# Download all configure file from github
-git clone https://github.com/pingsoli/dotfiles.git
+if [ ! -d "$MY_WORKSPACE" ]; then
+  echo "creating and changing to directory $MY_WORKSPACE"
+  mkdir "$MY_WORKSPACE" && cd "$MY_WORKSPACE"
+else
+  echo "'$MY_WORKSPACE' already exists"
+fi
 
-################################################################################
-# Essential tools
-################################################################################
-# for ag (https://github.com/ggreer/the_silver_searcher)
-sudo apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+install()
+{
+  # POSIX way to install software if not exist.
+  for var in "$@"
+  do
+    command -v "$var" >/dev/null 2>&1 || { sudo apt install -y "$var"; }
+  done
+}
 
-# samba network sharing service, sharing files between windows and linux.
-sudo apt-get install -y cifs-utils
+source ./install_utils.sh
+source ./install_samba.sh
 
+# git clone https://github.com/pingsoli/dotfiles.git
+# git clone https://github.com/pingsoli/shell-scripts.git
 
 # Install vim from source code
-#source ./install_vim.sh
-
-#source ./install_tmux.sh
-#source ./install_fish.sh
-#source ./install_pyenv.sh
+# source ./install_vim.sh
+# source ./install_tmux.sh
+# source ./install_fish.sh
+# source ./install_pyenv.sh

@@ -1,10 +1,11 @@
 #!/bin/bash
-# Showing ip address when booting ubuntu system.
-# NOTE: required root permission
+# Showing ip address when starting ubuntu system.
+# NOTE: needs root permission to run.
+# take care of `ifconfig` output, may needs small changes.
 
-# Required root permission.
+# Check permission whether
 if [[ $EUID -ne 0 ]]; then
-  echo "Requied root permissio" 
+  echo "Requied root permissio"
   exit 1
 fi
 
@@ -12,7 +13,8 @@ sh_file="/usr/local/bin/get-ip-address"
 
 # Creating a shell script to show ip address(except localhost)
 cat >$sh_file << 'EOF'
-/sbin/ifconfig | grep "inet addr" | grep -v "127.0.0.1" | awk '{ print $2 }' | awk -F: '{ print $2 }'
+#!/bin/bash
+/sbin/ifconfig | grep "inet " | grep -v "127.0.0.1" | awk '{ print $2 }'
 EOF
 
 # Add exec permission to /usr/local/bin/get-ip-address
@@ -23,7 +25,7 @@ cp /etc/issue /etc/issue-standard
 
 nc_run_sh="/etc/network/if-up.d/show-ip-address"
 cat >$nc_run_sh << 'EOF'
-#!/bin/sh
+#!/bin/bash
 if [ "$METHOD" = loopback ]; then
   exit 0
 fi
@@ -34,7 +36,7 @@ if [ "$MODE" != start ]; then
 fi
 
 cp /etc/issue-standard /etc/issue
-/usr/local/bin/get-ip-address >> /etc/issue
+/bin/bash /usr/local/bin/get-ip-address >> /etc/issue
 echo "" >> /etc/issue
 EOF
 

@@ -23,20 +23,20 @@ print_warn()
 # pass one parameter
 # show the infomation
 print_info()
-{ 
+{
   bytes=`echo $1 | wc -L`
-  
-  if [ $# -eq 2 ]; then 
+
+  if [ $# -eq 2 ]; then
     if [ $bytes -lt 8 ]; then
       echo -e "$1\t\t\t:\t$2"
     elif [ $bytes -ge 8 -a $bytes -lt 16 ]; then
       echo -e "$1\t\t:\t$2"
-    else 
+    else
       echo -e "$1\t:\t$2"
     fi
   elif [ $# -eq 1 ]; then
     echo -e "$1"
-  else 
+  else
     print_err "function `basename $0` wrong arguments"
   fi
 }
@@ -65,7 +65,7 @@ to_upper()
 
 to_lower()
 {
-  if [ $# -eq 1 ]; then 
+  if [ $# -eq 1 ]; then
     echo `echo $1 | tr '[A-Z]' '[a-z]'`
   fi
 }
@@ -91,7 +91,7 @@ write_to()
   # first parameter: configure file name
   # second parameter: key
   # third parameter: value set
-  if [ $# -eq 3 ]; then 
+  if [ $# -eq 3 ]; then
     sed -i -e "s/^$2\(.*\)/$2 = $3/g" $1
     return 0
   fi
@@ -110,16 +110,16 @@ init()
   fi
 }
 
-# Install software 
-# Recusively install software 
-install_software() 
+# Install software
+# Recusively install software
+install_software()
 {
   local apt_lock_file=/var/lib/dpkg/lock
   local has_errors=no
-  
+
   for i in $*
   do
-    # Check software whether is installed, if yes, skip to next 
+    # Check software whether is installed, if yes, skip to next
     if [ "`dpkg -l | awk '{print $2}' | eval grep -w '^$i$'`" = "$i" ]; then
       print_info "[ $i ] has installed"
       continue
@@ -129,12 +129,12 @@ install_software()
 
     # install software and start to log
     apt-get -y install $i
-    
-    if [ $? -ne 0 ]; then 
+
+    if [ $? -ne 0 ]; then
       print_warn "try to reinstall again"
       rm -rf $apt_lock_file /var/cache/apt/archives/lock
       apt-get -y install $i
-      if [ $? -ne 0 ]; then 
+      if [ $? -ne 0 ]; then
         print_warn "install $i failed"
         has_errors=yes
         continue
@@ -152,18 +152,18 @@ install_software()
   fi
 }
 
-# Encapsulate install_software 
+# Encapsulate install_software
 # install software and write infomation to configure file
 install_and_config()
 {
   # first argument: software name
   # second argument: config filename
   # third argument: key wanted to modify
-  
-  if [ $# -eq 3 ]; then 
+
+  if [ $# -eq 3 ]; then
     install_software $1
 
-    if [ $? -eq 0 ]; then 
+    if [ $? -eq 0 ]; then
       write_to $2 $3 yes
       return 0
     fi
@@ -179,9 +179,9 @@ install_and_config()
 list_undone()
 {
   # first arugment: configure file name
-  
+
   echo -e "\n=============== undone list ==================="
-  if [ $# -eq 1 ]; then 
+  if [ $# -eq 1 ]; then
     grep -w '.*= no' $1 | awk '{print $1" is not done"}'
   fi
 }

@@ -1,5 +1,6 @@
-# shell
-## Description
-This directory contains all scripts of configuring ubuntu system.  
+# Shell Scripts
 
-NOTE: not tested on other linux distribution.  
+## Description
+this repo contains useful tools installation and conveninet scripts.
+
+NOTE: not tested on other unix-like system.  

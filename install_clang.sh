@@ -14,10 +14,10 @@ sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-6.0
 sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-6.0 1000
 
 # Set clang as default compiler.
-# If you use fish shell, please add this to your config.fish
+# For fish shell user, add following to your config.fish.
 #  set -gx CC /usr/bin/clang
 #  set -gx CXX /usr/bin/clang++
 #
-# If you use bash shell, please add this to your /etc/bash.bashrc
+# For bash shell user, add following to your /etc/bash.bashrc.
 #  export CC=/usr/bin/clang
 #  export CXX=/usr/bin/clang++

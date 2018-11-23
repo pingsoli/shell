@@ -6,7 +6,7 @@
 # NOTE: Make sure fish shell is installed before pyenv.
 ################################################################################
 
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+# git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 
 # Modify system variable
 # In fish shell, we should add this in fish config file
