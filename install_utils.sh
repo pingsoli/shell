@@ -30,3 +30,6 @@ install gcc cmake autoconf automake pkg-config
 install valgrind
 
 install git
+
+# Drag files to transfer from windows to linux under xshell.
+install lrzsz

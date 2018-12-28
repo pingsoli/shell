@@ -1,6 +1,5 @@
 # Shell Scripts
 
 ## Description
-this repo contains useful tools installation and conveninet scripts.
-
-NOTE: not tested on other unix-like system.  
+this repo contains automation scripts to initialize ubuntu system. These scripts
+install useful tools and do something automatically.
