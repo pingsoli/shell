@@ -1,4 +1,7 @@
 #!/bin/bash
+
+install tmux
+
 ################################################################################
 # Install tmux from source code.
 # https://github.com/tmux/tmux

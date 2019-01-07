@@ -1,21 +1,10 @@
 #!/bin/bash
+# Run current script to custom your ubuntu system.
+# You can also run the separate script for you own requirements.
 
 if [[ $EUID -ne 0 ]]; then
   echo "Required root permission"
   exit 1
-fi
-
-################################################################################
-# Prequisites
-################################################################################
-MY_HOME="/home/pingsoli"
-MY_WORKSPACE="$MY_HOME/workspace"
-
-if [ ! -d "$MY_WORKSPACE" ]; then
-  echo "creating and changing to directory $MY_WORKSPACE"
-  mkdir "$MY_WORKSPACE" && cd "$MY_WORKSPACE"
-else
-  echo "'$MY_WORKSPACE' already exists"
 fi
 
 install()
@@ -27,14 +16,15 @@ install()
   done
 }
 
+source ./config.sh
+source ./remove_and_create_dirs.sh
+
 source ./install_utils.sh
 source ./install_samba.sh
-
-# git clone https://github.com/pingsoli/dotfiles.git
-# git clone https://github.com/pingsoli/shell-scripts.git
-
-# Install vim from source code
-# source ./install_vim.sh
-# source ./install_tmux.sh
-# source ./install_fish.sh
+source ./install_vim.sh
+source ./install_tmux.sh
+source ./install_fish.sh
 # source ./install_pyenv.sh
+
+source ./change_timezone.sh
+source ./boot_showing_ip.sh

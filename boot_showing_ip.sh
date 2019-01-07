@@ -1,9 +1,8 @@
 #!/bin/bash
-# Showing ip address when starting ubuntu system.
-# NOTE: needs root permission to run.
-# take care of `ifconfig` output, may needs small changes.
+# Showing ip address when starting ubuntu system, when you want to check ip
+# address from inner virtual machine OS and login by remote login tools.
 
-# Check permission whether
+# Check execution permission
 if [[ $EUID -ne 0 ]]; then
   echo "Requied root permissio"
   exit 1
@@ -11,13 +10,16 @@ fi
 
 sh_file="/usr/local/bin/get-ip-address"
 
-# Creating a shell script to show ip address(except localhost)
+# Create a shell script invoked by following when starting ubuntu system.
+# NOTE: `ifconfig` is deprecated in ubuntu 18.04, use `ip` command instead.
 cat >$sh_file << 'EOF'
 #!/bin/bash
-/sbin/ifconfig | grep "inet " | grep -v "127.0.0.1" | awk '{ print $2 }'
+
+# /sbin/ifconfig | grep "inet " | grep -v "127.0.0.1" | awk '{ print $2 }'
+/sbin/ip a | grep "inet " | grep -v "127.0.0.1" | awk '{ print $2 }'
 EOF
 
-# Add exec permission to /usr/local/bin/get-ip-address
+# Add executable permission to /usr/local/bin/get-ip-address
 chmod 755 $sh_file
 
 # Copying /etc/issue to /etc/issue-standard as a template file.

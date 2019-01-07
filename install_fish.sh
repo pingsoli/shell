@@ -1,21 +1,13 @@
 #!/bin/bash
 
+install fish
+
 ################################################################################
-# fish shell installation
+# Set fish as default terminal
 ################################################################################
-# Unnecessary: you don't have to add the repository, the following is inessential.
-# sudo apt-add-repository -y ppa:fish-shell/release-2
+# Change default terminal for root account.
+sudo chsh -s /usr/bin/fish
 
-# Install fish terminal.
-# sudo apt -y update
-# sudo apt -y install fish
-
-# Set fish as default shell when starting(need root password).
-# chsh -s /usr/bin/fish
-
-# fish configure file initialization
-# copy all settings files from github.
-# more detail: https://github.com/pingsoli/dotfiles.
-
-# Update all softwares to newest version.
-# sudo apt -y upgrade
+source ./config.sh
+# Change default terminal for specific user
+sudo chsh -s /usr/bin/fish "$MY_NAME"
