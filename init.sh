@@ -1,30 +1,29 @@
 #!/bin/bash
-# Run current script to custom your ubuntu system.
-# You can also run the separate script for you own requirements.
+# This script is the entry point of customing ubuntu system.
+# You can also run each script separately.
 
 if [[ $EUID -ne 0 ]]; then
-  echo "Required root permission"
+  echo "Required root permission..., try \`sudo $0\`."
   exit 1
 fi
 
-install()
-{
-  # POSIX way to install software if not exist.
-  for var in "$@"
-  do
-    command -v "$var" >/dev/null 2>&1 || { sudo apt install -y "$var"; }
-  done
-}
+# Run the task on a separate process, the parent process environment will not
+# be inherited in child process. Take care of the differences between:
+#
+# `source ./remove_and_create_dirs.sh`
+# and
+# `./remove_and_create_dirs.sh`.
+#
+# source command will not open a new process, rather in current environment to
+# run the script, all environment variable will be passed between scripts.
+./remove_and_create_dirs.sh
 
-source ./config.sh
-source ./remove_and_create_dirs.sh
+./install_utils.sh
+# ./install_samba.sh
+# ./install_vim.sh
+# ./install_fish.sh
 
-source ./install_utils.sh
-source ./install_samba.sh
-source ./install_vim.sh
-source ./install_tmux.sh
-source ./install_fish.sh
-# source ./install_pyenv.sh
+# ./install_pyenv.sh
 
-source ./change_timezone.sh
-source ./boot_showing_ip.sh
+# ./change_timezone.sh
+# ./boot_showing_ip.sh

@@ -13,7 +13,7 @@
 # sudo umount -a -t cifs -l
 # sudo umount -f share
 # 'f' stands for 'force', more detail: `man umount`.
-install cifs-utils
+sudo apt install -y cifs-utils
 
 ################################################################################
 # Samba server Installation (Heavy way)

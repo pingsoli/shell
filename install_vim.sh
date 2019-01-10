@@ -17,29 +17,38 @@ sudo apt install -y curl vim
 #
 # make && sudo make install
 
+source ./config.sh
+
 ################################################################################
-# Install YouCompleteMe plugin for vim.
+# Install YouCompleteMe plugin for vim
 ################################################################################
 # more detail: https://github.com/Valloric/YouCompleteMe#linux-64-bit
-# python3 install.py --clang-completer
+
+# YCM_HOME="$MY_HOME/.vim/bundle/YouCompleteMe"
+# if [ ! -d "$YCM_HOME" ]; then
+#   cd "$YCM_HOME"
 #
-# NOTE: Remember to move your configuration file to specific location.
+#   sudo apt install -y build-essential cmake python3-dev
+#   sudo git submodule update --init --recursive
+#
+#   # Fetch all submodules
+#   # sudo git pull --recurse-submodule
+#   # sudo git submodule update --remote --recursive
+#
+#   # Compile YouCompleteMe for c++ programming in vim
+#   sudo python3 install.py --clang-completer
+#
+#   cd "$MY_HOME"
+# fi
 
-source ./config.sh
-YCM_HOME="$MY_HOME/.vim/bundle/YouCompleteMe"
-
-if [ -d "$YCM_HOME" ]; then
-  cd "$YCM_HOME"
-
-  sudo apt install -y build-essential cmake python3-dev
-  sudo git submodule update --init --recursive
-
-  # Fetch all submodules
-  # sudo git pull --recurse-submodule
-  # sudo git submodule update --remote --recursive
-
-  # Compile YouCompleteMe for c++ programming in vim
-  sudo python3 install.py --clang-completer
-
-  cd "$MY_HOME"
+################################################################################
+# Install ctags plugin for vim
+################################################################################
+CTAGS="/usr/local/ctags/bin/ctags"
+if [ ! -f "$CTAGS" ]; then
+  cd "$MY_DOWNLOADS"
+  git clone  https://github.com/universal-ctags/ctags.git && \
+  cd "ctags" && ./autogen.sh && \
+  ./configure --prefix=/usr/local/ctags && make && sudo make install && \
+  cd /usr/bin && sudo ln -s "$CTAGS" "ctags"
 fi

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-install fish
+sudo apt install -y fish
 
 ################################################################################
 # Set fish as default terminal

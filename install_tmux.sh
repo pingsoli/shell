@@ -1,6 +1,6 @@
 #!/bin/bash
 
-install tmux
+sudo apt install -y tmux
 
 ################################################################################
 # Install tmux from source code.
