@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# NOTE: NET-TOOLS was deprecated on newest ubuntu distributions, IPROUTE is
+# provided instead.
+
 print_footprint()
 {
   local program_name="$1"
@@ -13,14 +16,12 @@ install()
 {
   # POSIX way to install software if not exist.
   for var in "$@"; do
-    # type "$var" >/dev/null 2>&1 ||\
-    #   { echo "install $var"; sudo apt install -y "$var"; }
-    #
+
     # NOTE: `command` will not take effect on installed package, such as
     # openssh-server, lrzsz, etc.
     command -v "$var" >/dev/null 2>&1 ||\
-      # { sudo apt install -y "$var"; printf '=%.0s' {1...80}; }
       { sudo apt install -y "$var"; print_footprint "$var"; }
+      # { sudo apt install -y "$var"; printf '=%.0s' {1...80}; }
   done
 }
 
@@ -38,16 +39,19 @@ install htop iftop tcpdump ncdu valgrind
 install tree
 
 # C/C++ compiler and tools
-install cmake autoconf automake pkg-config
-install autoconf automake libtool curl make gcc g++ unzip
+install pkg-config libtool unzip curl
+install autoconf automake cmake make gcc g++
 
-install tmux
+install tmux silversearcher-ag
 
 # Remote login by SSH. P.S. the service will be run automatically after
 # finishing installation.
 install openssh-server
 
 # Drag files to transfer from windows to linux under xshell
+# `sz <filename>` to send file to remote windows host.
+# `rz` command to open a dialog to choose your wanted file to transfer same as
+# drag file.
 install lrzsz
 
 # Deploy python3 environment
